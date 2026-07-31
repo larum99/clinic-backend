@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: clinic
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/dental_clinic
+    username: root
+    password: ${DB_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+      hibernate:
+        ddl-auto: validate
+      show-sql: true
+      open-in-view: false
+      properties:
+        hibernate:
+          format_sql: true
+
+    sql:
+      init:
+        mode: never
+
+  server:
+    port: 8080
