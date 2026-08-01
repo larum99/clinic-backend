@@ -1,6 +1,7 @@
 package com.dental.clinic.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,10 +30,11 @@ public class Patient {
     @Column(name = "accepts_promotions", nullable = false)
     private Boolean acceptsPromotions = false;
 
+    @CreationTimestamp
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user")
     private User user;
 

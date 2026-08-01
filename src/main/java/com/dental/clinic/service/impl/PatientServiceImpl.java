@@ -10,11 +10,14 @@ import com.dental.clinic.mapper.PatientMapper;
 import com.dental.clinic.repository.PatientRepository;
 import com.dental.clinic.repository.UserRepository;
 import com.dental.clinic.service.PatientService;
+import com.dental.clinic.utils.MessageConstants;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class PatientServiceImpl implements PatientService {
 
     private final PatientRepository patientRepository;
@@ -32,15 +35,16 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public PatientResponse createPatient(PatientRequest request) {
 
-        if (patientRepository.existsByDocumentNumber(request.documentNumber())) {
-            throw new DuplicateResourceException(
-                    "Patient with document number "
-                            + request.documentNumber()
-                            + " already exists"
-            );
-        }
+        validateDocumentNumberDoesNotExist(
+                request.documentNumber()
+        );
+
+        validateUserIsNotAssociatedWithPatient(
+                request.userId()
+        );
 
         User user = findUserById(request.userId());
 
@@ -51,39 +55,35 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public PatientResponse findPatientById(Long id) {
-
         Patient patient = findPatientEntityById(id);
         return patientMapper.toResponse(patient);
     }
 
     @Override
-    public List<PatientResponse> findAllPatients() {
-
-        return patientRepository.findAll()
-                .stream()
-                .map(patientMapper::toResponse)
-                .toList();
+    public Page<PatientResponse> findAllPatients(Pageable pageable) {
+        return patientRepository.findAll(pageable)
+                .map(patientMapper::toResponse);
     }
 
     @Override
+    @Transactional
     public PatientResponse updatePatient(
             Long id,
             PatientRequest request) {
 
         Patient patient = findPatientEntityById(id);
 
+        validateDocumentNumberForUpdate(
+                patient,
+                request.documentNumber()
+        );
+
+        validateUserForUpdate(
+                id,
+                request.userId()
+        );
+
         User user = findUserById(request.userId());
-
-        if (!patient.getDocumentNumber().equals(request.documentNumber())
-                && patientRepository.existsByDocumentNumber(
-                request.documentNumber())) {
-
-            throw new DuplicateResourceException(
-                    "Patient with document number "
-                            + request.documentNumber()
-                            + " already exists"
-            );
-        }
 
         patient.setUser(user);
         patient.setDocumentType(request.documentType());
@@ -98,26 +98,62 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    @Transactional
     public void deletePatient(Long id) {
-
         Patient patient = findPatientEntityById(id);
-
         patientRepository.delete(patient);
     }
 
     private Patient findPatientEntityById(Long id) {
-
         return patientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Patient with id " + id + " was not found"
+                        MessageConstants.PATIENT_NOT_FOUND.formatted(id)
                 ));
     }
 
     private User findUserById(Long id) {
-
         return userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "User with id " + id + " was not found"
+                        MessageConstants.USER_NOT_FOUND.formatted(id)
                 ));
+    }
+
+    private void validateDocumentNumberDoesNotExist(String documentNumber) {
+        if (patientRepository.existsByDocumentNumber(documentNumber)) {
+            throw new DuplicateResourceException(
+                    MessageConstants.PATIENT_DOCUMENT_DUPLICATE.formatted(documentNumber)
+            );
+        }
+    }
+
+    private void validateDocumentNumberForUpdate(
+            Patient patient,
+            String documentNumber) {
+
+        if (!patient.getDocumentNumber().equals(documentNumber)) {
+            validateDocumentNumberDoesNotExist(documentNumber);
+        }
+    }
+
+    private void validateUserIsNotAssociatedWithPatient(Long userId) {
+        if (patientRepository.existsByUserId(userId)) {
+            throw new DuplicateResourceException(
+                    MessageConstants.USER_ALREADY_ASSOCIATED.formatted(userId)
+            );
+        }
+    }
+
+    private void validateUserForUpdate(
+            Long patientId,
+            Long userId) {
+
+        patientRepository.findByUserId(userId)
+                .ifPresent(patient -> {
+                    if (!patient.getId().equals(patientId)) {
+                        throw new DuplicateResourceException(
+                                MessageConstants.USER_ALREADY_ASSOCIATED_OTHER.formatted(userId)
+                        );
+                    }
+                });
     }
 }
