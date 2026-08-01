@@ -14,7 +14,7 @@ public class DentalServiceMapper {
         service.setDescription(request.description());
         service.setDurationMinutes(request.durationMinutes());
         service.setPrice(request.price());
-        service.setStatus(request.status());
+        service.setActive(request.active());
 
         return service;
     }
@@ -26,7 +26,7 @@ public class DentalServiceMapper {
                 service.getDescription(),
                 service.getDurationMinutes(),
                 service.getPrice(),
-                service.getStatus()
+                service.getActive()
         );
     }
 }

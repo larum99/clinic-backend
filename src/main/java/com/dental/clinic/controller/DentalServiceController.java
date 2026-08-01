@@ -2,7 +2,7 @@ package com.dental.clinic.controller;
 
 import com.dental.clinic.dto.request.DentalServiceRequest;
 import com.dental.clinic.dto.response.DentalServiceResponse;
-import com.dental.clinic.service.DentalService;
+import com.dental.clinic.service.DentalServiceService;
 import com.dental.clinic.utils.Endpoints;
 import com.dental.clinic.utils.PaginationConstants;
 import jakarta.validation.Valid;
@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(Endpoints.DENTAL_SERVICE_PATH)
 public class DentalServiceController {
 
-    private final DentalService dentalService;
+    private final DentalServiceService dentalServiceService;
 
-    public DentalServiceController(DentalService dentalService) {
-        this.dentalService = dentalService;
+    public DentalServiceController(DentalServiceService dentalServiceService) {
+        this.dentalServiceService = dentalServiceService;
     }
 
     @PostMapping
@@ -28,7 +28,7 @@ public class DentalServiceController {
             @Valid @RequestBody DentalServiceRequest request) {
 
         DentalServiceResponse response =
-                dentalService.createDentalService(request);
+                dentalServiceService.createDentalService(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -42,7 +42,7 @@ public class DentalServiceController {
             Pageable pageable) {
 
         Page<DentalServiceResponse> response =
-                dentalService.findAllDentalServices(pageable);
+                dentalServiceService.findAllDentalServices(pageable);
 
         return ResponseEntity.ok(response);
     }
@@ -52,7 +52,7 @@ public class DentalServiceController {
             @PathVariable Long id) {
 
         DentalServiceResponse response =
-                dentalService.findDentalServiceById(id);
+                dentalServiceService.findDentalServiceById(id);
 
         return ResponseEntity.ok(response);
     }
@@ -63,7 +63,7 @@ public class DentalServiceController {
             @Valid @RequestBody DentalServiceRequest request) {
 
         DentalServiceResponse response =
-                dentalService.updateDentalService(id, request);
+                dentalServiceService.updateDentalService(id, request);
 
         return ResponseEntity.ok(response);
     }
@@ -72,7 +72,7 @@ public class DentalServiceController {
     public ResponseEntity<Void> deleteDentalService(
             @PathVariable Long id) {
 
-        dentalService.deleteDentalService(id);
+        dentalServiceService.deleteDentalService(id);
 
         return ResponseEntity.noContent().build();
     }

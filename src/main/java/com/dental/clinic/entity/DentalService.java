@@ -25,8 +25,8 @@ public class DentalService {
     @Column(name = "price")
     private BigDecimal price;
 
-    @Column(name = "status", nullable = false, length = 20)
-    private String status;
+    @Column(name = "active", nullable = false, length = 20)
+    private Boolean active;
 
     public DentalService() {
     }
@@ -71,11 +71,11 @@ public class DentalService {
         this.price = price;
     }
 
-    public String getStatus() {
-        return status;
+    public Boolean getActive() {
+        return active;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

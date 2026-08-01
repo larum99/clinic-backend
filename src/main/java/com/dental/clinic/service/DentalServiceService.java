@@ -5,7 +5,7 @@ import com.dental.clinic.dto.response.DentalServiceResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface DentalService {
+public interface DentalServiceService {
     DentalServiceResponse createDentalService(DentalServiceRequest request);
     DentalServiceResponse findDentalServiceById(Long id);
     Page<DentalServiceResponse> findAllDentalServices(Pageable pageable);

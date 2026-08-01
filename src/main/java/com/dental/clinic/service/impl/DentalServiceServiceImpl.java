@@ -2,13 +2,13 @@ package com.dental.clinic.service.impl;
 
 import com.dental.clinic.dto.request.DentalServiceRequest;
 import com.dental.clinic.dto.response.DentalServiceResponse;
+import com.dental.clinic.entity.DentalService;
 import com.dental.clinic.exception.BusinessException;
 import com.dental.clinic.exception.DuplicateResourceException;
 import com.dental.clinic.exception.ResourceNotFoundException;
 import com.dental.clinic.mapper.DentalServiceMapper;
 import com.dental.clinic.repository.DentalServiceRepository;
-import com.dental.clinic.service.DentalService;
-import com.dental.clinic.utils.ApplicationConstants;
+import com.dental.clinic.service.DentalServiceService;
 import com.dental.clinic.utils.MessageConstants;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,12 +19,12 @@ import java.math.BigDecimal;
 
 @Service
 @Transactional(readOnly = true)
-public class DentalServiceImpl implements DentalService {
+public class DentalServiceServiceImpl implements DentalServiceService {
 
     private final DentalServiceRepository dentalServiceRepository;
     private final DentalServiceMapper dentalServiceMapper;
 
-    public DentalServiceImpl(
+    public DentalServiceServiceImpl(
             DentalServiceRepository dentalServiceRepository,
             DentalServiceMapper dentalServiceMapper) {
 
@@ -38,10 +38,9 @@ public class DentalServiceImpl implements DentalService {
 
         validateServiceCreation(request);
 
-        com.dental.clinic.entity.DentalService dentalService =
-                dentalServiceMapper.toEntity(request);
+        DentalService dentalService = dentalServiceMapper.toEntity(request);
 
-        com.dental.clinic.entity.DentalService savedDentalService =
+        DentalService savedDentalService =
                 dentalServiceRepository.save(dentalService);
 
         return dentalServiceMapper.toResponse(savedDentalService);
@@ -50,13 +49,14 @@ public class DentalServiceImpl implements DentalService {
     @Override
     public DentalServiceResponse findDentalServiceById(Long id) {
 
-        com.dental.clinic.entity.DentalService dentalService = findServiceEntityById(id);
+        DentalService dentalService = findServiceEntityById(id);
 
         return dentalServiceMapper.toResponse(dentalService);
     }
 
     @Override
     public Page<DentalServiceResponse> findAllDentalServices(Pageable pageable) {
+
         return dentalServiceRepository.findAll(pageable)
                 .map(dentalServiceMapper::toResponse);
     }
@@ -67,7 +67,7 @@ public class DentalServiceImpl implements DentalService {
             Long id,
             DentalServiceRequest request) {
 
-        com.dental.clinic.entity.DentalService dentalService = findServiceEntityById(id);
+        DentalService dentalService = findServiceEntityById(id);
 
         validateServiceUpdate(dentalService, request);
 
@@ -77,7 +77,7 @@ public class DentalServiceImpl implements DentalService {
         dentalService.setPrice(request.price());
         dentalService.setActive(request.active());
 
-        com.dental.clinic.entity.DentalService updatedDentalService =
+        DentalService updatedDentalService =
                 dentalServiceRepository.save(dentalService);
 
         return dentalServiceMapper.toResponse(updatedDentalService);
@@ -108,12 +108,13 @@ public class DentalServiceImpl implements DentalService {
     }
 
     private void validateServiceUpdate(
-            com.dental.clinic.entity.DentalService dentalService,
+            DentalService dentalService,
             DentalServiceRequest request) {
 
         validateServiceNameForUpdate(
                 dentalService,
-                request.name());
+                request.name()
+        );
 
         validateDuration(request.durationMinutes());
         validatePrice(request.price());
@@ -122,7 +123,6 @@ public class DentalServiceImpl implements DentalService {
     private void validateServiceNameDoesNotExist(String name) {
 
         if (dentalServiceRepository.existsByName(name)) {
-
             throw new DuplicateResourceException(
                     MessageConstants.SERVICE_NAME_DUPLICATE.formatted(name)
             );
@@ -130,7 +130,7 @@ public class DentalServiceImpl implements DentalService {
     }
 
     private void validateServiceNameForUpdate(
-            com.dental.clinic.entity.DentalService dentalService,
+            DentalService dentalService,
             String name) {
 
         if (!dentalService.getName().equals(name)) {
@@ -141,7 +141,6 @@ public class DentalServiceImpl implements DentalService {
     private void validateDuration(Short durationMinutes) {
 
         if (durationMinutes <= 0) {
-
             throw new BusinessException(
                     MessageConstants.INVALID_SERVICE_DURATION
             );
@@ -151,7 +150,6 @@ public class DentalServiceImpl implements DentalService {
     private void validatePrice(BigDecimal price) {
 
         if (price != null && price.signum() < 0) {
-
             throw new BusinessException(
                     MessageConstants.INVALID_SERVICE_PRICE
             );

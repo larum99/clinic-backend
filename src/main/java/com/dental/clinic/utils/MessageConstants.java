@@ -14,7 +14,6 @@ public final class MessageConstants {
     public static final String SERVICE_NAME_DUPLICATE = "Service with name '%s' already exists";
     public static final String INVALID_SERVICE_DURATION = "Service duration must be greater than zero";
     public static final String INVALID_SERVICE_PRICE = "Service price cannot be negative";
-    public static final String INVALID_SERVICE_STATUS = "Service status must be ACTIVO or INACTIVO";
 
     public static final String ERROR_TITLE_RESOURCE_NOT_FOUND = "Resource Not Found";
     public static final String ERROR_TITLE_DUPLICATE_RESOURCE = "Duplicate Resource";

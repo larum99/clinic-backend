@@ -8,6 +8,6 @@ public record DentalServiceResponse(
         String description,
         Short durationMinutes,
         BigDecimal price,
-        String status
+        Boolean active
 ) {
 }
