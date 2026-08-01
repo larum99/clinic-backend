@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -76,7 +75,7 @@ public class DentalServiceImpl implements DentalService {
         dentalService.setDescription(request.description());
         dentalService.setDurationMinutes(request.durationMinutes());
         dentalService.setPrice(request.price());
-        dentalService.setStatus(request.status());
+        dentalService.setActive(request.active());
 
         com.dental.clinic.entity.DentalService updatedDentalService =
                 dentalServiceRepository.save(dentalService);
@@ -88,12 +87,12 @@ public class DentalServiceImpl implements DentalService {
     @Transactional
     public void deleteDentalService(Long id) {
 
-        com.dental.clinic.entity.DentalService dentalService = findServiceEntityById(id);
+        DentalService dentalService = findServiceEntityById(id);
 
         dentalServiceRepository.delete(dentalService);
     }
 
-    private com.dental.clinic.entity.DentalService findServiceEntityById(Long id) {
+    private DentalService findServiceEntityById(Long id) {
 
         return dentalServiceRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -106,7 +105,6 @@ public class DentalServiceImpl implements DentalService {
         validateServiceNameDoesNotExist(request.name());
         validateDuration(request.durationMinutes());
         validatePrice(request.price());
-        validateStatus(request.status());
     }
 
     private void validateServiceUpdate(
@@ -119,7 +117,6 @@ public class DentalServiceImpl implements DentalService {
 
         validateDuration(request.durationMinutes());
         validatePrice(request.price());
-        validateStatus(request.status());
     }
 
     private void validateServiceNameDoesNotExist(String name) {
@@ -157,17 +154,6 @@ public class DentalServiceImpl implements DentalService {
 
             throw new BusinessException(
                     MessageConstants.INVALID_SERVICE_PRICE
-            );
-        }
-    }
-
-    private void validateStatus(String status) {
-
-        if (!ApplicationConstants.STATUS_ACTIVE.equals(status)
-                && !ApplicationConstants.STATUS_INACTIVE.equals(status)) {
-
-            throw new BusinessException(
-                    MessageConstants.INVALID_SERVICE_STATUS
             );
         }
     }
