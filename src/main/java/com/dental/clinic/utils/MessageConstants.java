@@ -10,6 +10,11 @@ public final class MessageConstants {
     public static final String PATIENT_DOCUMENT_DUPLICATE = "Patient with document number %s already exists";
     public static final String USER_ALREADY_ASSOCIATED = "User with id %s is already associated with a patient";
     public static final String USER_ALREADY_ASSOCIATED_OTHER = "User with id %s is already associated with another patient";
+    public static final String SERVICE_NOT_FOUND = "Service with id %s was not found";
+    public static final String SERVICE_NAME_DUPLICATE = "Service with name '%s' already exists";
+    public static final String INVALID_SERVICE_DURATION = "Service duration must be greater than zero";
+    public static final String INVALID_SERVICE_PRICE = "Service price cannot be negative";
+    public static final String INVALID_SERVICE_STATUS = "Service status must be ACTIVO or INACTIVO";
 
     public static final String ERROR_TITLE_RESOURCE_NOT_FOUND = "Resource Not Found";
     public static final String ERROR_TITLE_DUPLICATE_RESOURCE = "Duplicate Resource";
