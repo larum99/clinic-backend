@@ -14,6 +14,10 @@ public final class MessageConstants {
     public static final String SERVICE_NAME_DUPLICATE = "Service with name '%s' already exists";
     public static final String INVALID_SERVICE_DURATION = "Service duration must be greater than zero";
     public static final String INVALID_SERVICE_PRICE = "Service price cannot be negative";
+    public static final String SPECIALIST_NOT_FOUND = "Specialist with id %s was not found";
+    public static final String SPECIALIST_LICENSE_DUPLICATE = "Specialist with professional license %s already exists";
+    public static final String USER_ALREADY_ASSOCIATED_SPECIALIST = "User with id %s is already associated with a specialist";
+    public static final String USER_ALREADY_ASSOCIATED_OTHER_SPECIALIST = "User with id %s is already associated with another specialist";
 
     public static final String ERROR_TITLE_RESOURCE_NOT_FOUND = "Resource Not Found";
     public static final String ERROR_TITLE_DUPLICATE_RESOURCE = "Duplicate Resource";
