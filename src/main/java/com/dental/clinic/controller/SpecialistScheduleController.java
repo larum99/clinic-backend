@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(Endpoints.SPECIALIST_SCHEDULES_PATH)
 public class SpecialistScheduleController {
-
     private final SpecialistScheduleService specialistScheduleService;
-
     public SpecialistScheduleController(
             SpecialistScheduleService specialistScheduleService) {
         this.specialistScheduleService = specialistScheduleService;
@@ -27,10 +25,8 @@ public class SpecialistScheduleController {
     @PostMapping
     public ResponseEntity<SpecialistScheduleResponse> createSpecialistSchedule(
             @Valid @RequestBody SpecialistScheduleRequest request) {
-
         SpecialistScheduleResponse response =
                 specialistScheduleService.createSpecialistSchedule(request);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -40,20 +36,16 @@ public class SpecialistScheduleController {
                     size = PaginationConstants.DEFAULT_PAGE_SIZE,
                     sort = PaginationConstants.DEFAULT_SORT_BY)
             Pageable pageable) {
-
         Page<SpecialistScheduleResponse> response =
                 specialistScheduleService.findAllSpecialistSchedules(pageable);
-
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SpecialistScheduleResponse> findSpecialistScheduleById(
             @PathVariable Long id) {
-
         SpecialistScheduleResponse response =
                 specialistScheduleService.findSpecialistScheduleById(id);
-
         return ResponseEntity.ok(response);
     }
 
@@ -61,19 +53,15 @@ public class SpecialistScheduleController {
     public ResponseEntity<SpecialistScheduleResponse> updateSpecialistSchedule(
             @PathVariable Long id,
             @Valid @RequestBody SpecialistScheduleRequest request) {
-
         SpecialistScheduleResponse response =
                 specialistScheduleService.updateSpecialistSchedule(id, request);
-
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSpecialistSchedule(
             @PathVariable Long id) {
-
         specialistScheduleService.deleteSpecialistSchedule(id);
-
         return ResponseEntity.noContent().build();
     }
 }
