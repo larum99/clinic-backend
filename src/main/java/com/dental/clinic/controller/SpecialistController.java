@@ -26,10 +26,8 @@ public class SpecialistController {
     @PostMapping
     public ResponseEntity<SpecialistResponse> createSpecialist(
             @Valid @RequestBody SpecialistRequest request) {
-
         SpecialistResponse response =
                 specialistService.createSpecialist(request);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -39,20 +37,16 @@ public class SpecialistController {
                     size = PaginationConstants.DEFAULT_PAGE_SIZE,
                     sort = PaginationConstants.DEFAULT_SORT_BY)
             Pageable pageable) {
-
         Page<SpecialistResponse> response =
                 specialistService.findAllSpecialists(pageable);
-
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<SpecialistResponse> findSpecialistById(
             @PathVariable Long id) {
-
         SpecialistResponse response =
                 specialistService.findSpecialistById(id);
-
         return ResponseEntity.ok(response);
     }
 
@@ -60,19 +54,15 @@ public class SpecialistController {
     public ResponseEntity<SpecialistResponse> updateSpecialist(
             @PathVariable Long id,
             @Valid @RequestBody SpecialistRequest request) {
-
         SpecialistResponse response =
                 specialistService.updateSpecialist(id, request);
-
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSpecialist(
             @PathVariable Long id) {
-
         specialistService.deleteSpecialist(id);
-
         return ResponseEntity.noContent().build();
     }
 }

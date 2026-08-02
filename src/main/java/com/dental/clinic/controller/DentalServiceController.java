@@ -26,10 +26,8 @@ public class DentalServiceController {
     @PostMapping
     public ResponseEntity<DentalServiceResponse> createDentalService(
             @Valid @RequestBody DentalServiceRequest request) {
-
         DentalServiceResponse response =
                 dentalServiceService.createDentalService(request);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -40,20 +38,16 @@ public class DentalServiceController {
                     sort = PaginationConstants.DEFAULT_SORT_BY
             )
             Pageable pageable) {
-
         Page<DentalServiceResponse> response =
                 dentalServiceService.findAllDentalServices(pageable);
-
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<DentalServiceResponse> findDentalServiceById(
             @PathVariable Long id) {
-
         DentalServiceResponse response =
                 dentalServiceService.findDentalServiceById(id);
-
         return ResponseEntity.ok(response);
     }
 
@@ -61,19 +55,15 @@ public class DentalServiceController {
     public ResponseEntity<DentalServiceResponse> updateDentalService(
             @PathVariable Long id,
             @Valid @RequestBody DentalServiceRequest request) {
-
         DentalServiceResponse response =
                 dentalServiceService.updateDentalService(id, request);
-
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteDentalService(
             @PathVariable Long id) {
-
         dentalServiceService.deleteDentalService(id);
-
         return ResponseEntity.noContent().build();
     }
 }
