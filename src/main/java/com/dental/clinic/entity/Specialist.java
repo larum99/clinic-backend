@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
 @Entity
 @Table(name = "specialists")
@@ -30,6 +31,14 @@ public class Specialist {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false, unique = true)
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "specialist_services",
+            joinColumns = @JoinColumn(name = "id_specialist"),
+            inverseJoinColumns = @JoinColumn(name = "id_service")
+    )
+    private Set<DentalService> services = new HashSet<>();
 
     public Specialist() {
     }
@@ -76,5 +85,17 @@ public class Specialist {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Set<DentalService> getServices() {
+        return services;
+    }
+
+    public void setServices(Set<DentalService> services) {
+        this.services = services;
     }
 }

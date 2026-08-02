@@ -2,11 +2,13 @@ package com.dental.clinic.service.impl;
 
 import com.dental.clinic.dto.request.SpecialistRequest;
 import com.dental.clinic.dto.response.SpecialistResponse;
+import com.dental.clinic.entity.DentalService;
 import com.dental.clinic.entity.Specialist;
 import com.dental.clinic.entity.User;
 import com.dental.clinic.exception.DuplicateResourceException;
 import com.dental.clinic.exception.ResourceNotFoundException;
 import com.dental.clinic.mapper.SpecialistMapper;
+import com.dental.clinic.repository.DentalServiceRepository;
 import com.dental.clinic.repository.SpecialistRepository;
 import com.dental.clinic.repository.UserRepository;
 import com.dental.clinic.service.SpecialistService;
@@ -16,21 +18,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Service
 @Transactional(readOnly = true)
 public class SpecialistServiceImpl implements SpecialistService {
 
     private final SpecialistRepository specialistRepository;
     private final UserRepository userRepository;
+    private final DentalServiceRepository dentalServiceRepository;
     private final SpecialistMapper specialistMapper;
 
     public SpecialistServiceImpl(
             SpecialistRepository specialistRepository,
             UserRepository userRepository,
+            DentalServiceRepository dentalServiceRepository,
             SpecialistMapper specialistMapper) {
 
         this.specialistRepository = specialistRepository;
         this.userRepository = userRepository;
+        this.dentalServiceRepository = dentalServiceRepository;
         this.specialistMapper = specialistMapper;
     }
 
@@ -47,7 +56,9 @@ public class SpecialistServiceImpl implements SpecialistService {
 
         User user = findUserById(request.userId());
 
-        Specialist specialist = specialistMapper.toEntity(request, user);
+        Set<DentalService> services = findServicesByIds(request.serviceIds());
+
+        Specialist specialist = specialistMapper.toEntity(request, user, services);
         Specialist savedSpecialist = specialistRepository.save(specialist);
 
         return specialistMapper.toResponse(savedSpecialist);
@@ -85,10 +96,13 @@ public class SpecialistServiceImpl implements SpecialistService {
 
         User user = findUserById(request.userId());
 
+        Set<DentalService> services = findServicesByIds(request.serviceIds());
+
         specialist.setUser(user);
         specialist.setSpecialty(request.specialty());
         specialist.setProfessionalLicense(request.professionalLicense());
         specialist.setActive(request.active());
+        specialist.setServices(services);
 
         Specialist updatedSpecialist =
                 specialistRepository.save(specialist);
@@ -117,6 +131,15 @@ public class SpecialistServiceImpl implements SpecialistService {
                 .orElseThrow(() -> new ResourceNotFoundException(
                         MessageConstants.USER_NOT_FOUND.formatted(id)
                 ));
+    }
+
+    private Set<DentalService> findServicesByIds(Set<Long> serviceIds) {
+        Set<DentalService> services = new HashSet<>(dentalServiceRepository.findAllById(serviceIds));
+        if(services.size() != serviceIds.size()) {
+            throw new ResourceNotFoundException(MessageConstants.SERVICES_NOT_FOUND);
+        }
+
+        return services;
     }
 
     private void validateProfessionalLicenseDoesNotExist(String license) {

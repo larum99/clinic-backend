@@ -11,6 +11,7 @@ public final class MessageConstants {
     public static final String USER_ALREADY_ASSOCIATED = "User with id %s is already associated with a patient";
     public static final String USER_ALREADY_ASSOCIATED_OTHER = "User with id %s is already associated with another patient";
     public static final String SERVICE_NOT_FOUND = "Service with id %s was not found";
+    public static final String SERVICES_NOT_FOUND= "One or more services were not found";
     public static final String SERVICE_NAME_DUPLICATE = "Service with name '%s' already exists";
     public static final String INVALID_SERVICE_DURATION = "Service duration must be greater than zero";
     public static final String INVALID_SERVICE_PRICE = "Service price cannot be negative";

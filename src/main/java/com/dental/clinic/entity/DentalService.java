@@ -3,6 +3,7 @@ package com.dental.clinic.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "services")
@@ -27,6 +28,9 @@ public class DentalService {
 
     @Column(name = "active", nullable = false, length = 20)
     private Boolean active;
+
+    @ManyToMany(mappedBy = "services")
+    private Set<Specialist> specialists = new HashSet<>();
 
     public DentalService() {
     }
@@ -77,5 +81,13 @@ public class DentalService {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Set<Specialist> getSpecialists() {
+        return specialists;
+    }
+
+    public void setSpecialists(Set<Specialist> specialists) {
+        this.specialists = specialists;
     }
 }
