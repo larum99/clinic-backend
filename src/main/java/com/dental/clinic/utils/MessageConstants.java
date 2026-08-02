@@ -19,6 +19,9 @@ public final class MessageConstants {
     public static final String SPECIALIST_LICENSE_DUPLICATE = "Specialist with professional license %s already exists";
     public static final String USER_ALREADY_ASSOCIATED_SPECIALIST = "User with id %s is already associated with a specialist";
     public static final String USER_ALREADY_ASSOCIATED_OTHER_SPECIALIST = "User with id %s is already associated with another specialist";
+    public static final String SCHEDULE_NOT_FOUND = "Schedule with id %d was not found.";
+    public static final String INVALID_SCHEDULE_TIME_RANGE = "End time must be after start time.";
+    public static final String SCHEDULE_OVERLAP = "The specialist already has a schedule that overlaps this time range.";
 
     public static final String ERROR_TITLE_RESOURCE_NOT_FOUND = "Resource Not Found";
     public static final String ERROR_TITLE_DUPLICATE_RESOURCE = "Duplicate Resource";
