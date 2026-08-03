@@ -22,6 +22,8 @@ public final class MessageConstants {
     public static final String SCHEDULE_NOT_FOUND = "Schedule with id %d was not found.";
     public static final String INVALID_SCHEDULE_TIME_RANGE = "End time must be after start time.";
     public static final String SCHEDULE_OVERLAP = "The specialist already has a schedule that overlaps this time range.";
+    public static final String EMAIL_ALREADY_EXISTS = "User with email %s already exists";
+    public static final String ROLE_NOT_FOUND = "Role with id %s was not found";
 
     public static final String ERROR_TITLE_RESOURCE_NOT_FOUND = "Resource Not Found";
     public static final String ERROR_TITLE_DUPLICATE_RESOURCE = "Duplicate Resource";
