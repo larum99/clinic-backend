@@ -1,6 +1,6 @@
 package com.clinic.clinic.entity;
 
-import com.clinic.clinic.utils.AppointmentStatus;
+import com.clinic.clinic.enums.AppointmentStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;

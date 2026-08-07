@@ -1,6 +1,6 @@
 package com.clinic.clinic.dto.response;
 
-import com.clinic.clinic.utils.AppointmentStatus;
+import com.clinic.clinic.enums.AppointmentStatus;
 
 import java.time.LocalDateTime;
 

@@ -2,6 +2,7 @@ package com.clinic.clinic.mapper;
 
 import com.clinic.clinic.dto.request.UserRequest;
 import com.clinic.clinic.dto.response.UserResponse;
+import com.clinic.clinic.dto.response.UserSummaryResponse;
 import com.clinic.clinic.entity.Role;
 import com.clinic.clinic.entity.User;
 import org.springframework.stereotype.Component;
@@ -48,6 +49,21 @@ public class UserMapper {
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
                 user.getLastLogin()
+        );
+    }
+
+    public UserSummaryResponse toSummary(User user) {
+
+        String roleName = user.getRole() != null
+                ? user.getRole().getName()
+                : null;
+
+        return new UserSummaryResponse(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                roleName
         );
     }
 }

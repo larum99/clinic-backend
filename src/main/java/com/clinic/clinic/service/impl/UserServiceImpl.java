@@ -50,19 +50,16 @@ public class UserServiceImpl implements UserService {
 
         Role role = findRoleById(request.roleId());
 
-
         User user = userMapper.toEntity(request, role);
 
         user.setPasswordHash(
                 passwordEncoder.encode(request.password())
         );
 
-
         User savedUser = userRepository.save(user);
 
         return userMapper.toResponse(savedUser);
     }
-
 
     @Override
     public UserResponse findUserById(Long id) {
@@ -72,7 +69,6 @@ public class UserServiceImpl implements UserService {
         return userMapper.toResponse(user);
     }
 
-
     @Override
     public Page<UserResponse> findAllUsers(Pageable pageable) {
 
@@ -80,25 +76,20 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toResponse);
     }
 
-
     @Override
     @Transactional
     public UserResponse updateUser(
             Long id,
             UserRequest request) {
 
-
         User user = findUserEntityById(id);
-
 
         validateEmailForUpdate(
                 user,
                 request.email()
         );
 
-
         Role role = findRoleById(request.roleId());
-
 
         user.setRole(role);
         user.setFirstName(request.firstName());
@@ -106,7 +97,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.email());
         user.setPhone(request.phone());
         user.setStatus(request.status());
-
 
         /*
          * Solo actualizamos password si viene informado.
@@ -120,13 +110,10 @@ public class UserServiceImpl implements UserService {
             );
         }
 
-
         User updatedUser = userRepository.save(user);
-
 
         return userMapper.toResponse(updatedUser);
     }
-
 
     @Override
     @Transactional
@@ -137,8 +124,6 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-
-
     private User findUserEntityById(Long id) {
 
         return userRepository.findById(id)
@@ -147,8 +132,6 @@ public class UserServiceImpl implements UserService {
                 ));
     }
 
-
-
     private Role findRoleById(Short id) {
 
         return roleRepository.findById(id)
@@ -156,8 +139,6 @@ public class UserServiceImpl implements UserService {
                         MessageConstants.ROLE_NOT_FOUND.formatted(id)
                 ));
     }
-
-
 
     private void validateEmailDoesNotExist(String email) {
 
@@ -169,12 +150,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-
     private void validateEmailForUpdate(
             User user,
             String email) {
-
 
         if (!user.getEmail().equals(email)) {
 

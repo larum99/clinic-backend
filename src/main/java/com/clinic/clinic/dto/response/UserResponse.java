@@ -1,5 +1,7 @@
 package com.clinic.clinic.dto.response;
 
+import com.clinic.clinic.enums.UserStatus;
+
 import java.time.LocalDateTime;
 
 public record UserResponse(
@@ -10,7 +12,7 @@ public record UserResponse(
         String lastName,
         String email,
         String phone,
-        String status,
+        UserStatus status,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         LocalDateTime lastLogin

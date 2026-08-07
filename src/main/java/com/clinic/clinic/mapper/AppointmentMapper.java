@@ -7,7 +7,7 @@ import com.clinic.clinic.entity.DentalService;
 import com.clinic.clinic.entity.Patient;
 import com.clinic.clinic.entity.Specialist;
 import com.clinic.clinic.entity.User;
-import com.clinic.clinic.utils.AppointmentStatus;
+import com.clinic.clinic.enums.AppointmentStatus;
 import org.springframework.stereotype.Component;
 
 @Component

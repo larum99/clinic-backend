@@ -1,4 +1,4 @@
-package com.clinic.clinic.utils;
+package com.clinic.clinic.enums;
 
 public enum AppointmentStatus {
     PENDIENTE,

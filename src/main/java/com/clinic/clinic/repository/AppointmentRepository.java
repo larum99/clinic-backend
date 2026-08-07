@@ -1,7 +1,7 @@
 package com.clinic.clinic.repository;
 
 import com.clinic.clinic.entity.Appointment;
-import com.clinic.clinic.utils.AppointmentStatus;
+import com.clinic.clinic.enums.AppointmentStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

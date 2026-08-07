@@ -1,5 +1,6 @@
 package com.clinic.clinic.entity;
 
+import com.clinic.clinic.enums.UserStatus;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,7 +16,7 @@ public class User {
     @Column(name = "id_user")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(
             name = "id_role",
             nullable = false
@@ -37,8 +38,13 @@ public class User {
     @Column(name = "password_hash", nullable = false, length = 255)
     private String passwordHash;
 
-    @Column(name = "status", nullable = false, length = 20)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(
+            name = "status",
+            nullable = false,
+            length = 20
+    )
+    private UserStatus status;
 
     @CreationTimestamp
     @Column(
@@ -62,7 +68,6 @@ public class User {
     public User() {
     }
 
-
     public Long getId() {
         return id;
     }
@@ -70,7 +75,6 @@ public class User {
     public void setId(Long id) {
         this.id = id;
     }
-
 
     public Role getRole() {
         return role;
@@ -80,7 +84,6 @@ public class User {
         this.role = role;
     }
 
-
     public String getFirstName() {
         return firstName;
     }
@@ -88,7 +91,6 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-
 
     public String getLastName() {
         return lastName;
@@ -98,7 +100,6 @@ public class User {
         this.lastName = lastName;
     }
 
-
     public String getEmail() {
         return email;
     }
@@ -106,7 +107,6 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-
 
     public String getPhone() {
         return phone;
@@ -116,7 +116,6 @@ public class User {
         this.phone = phone;
     }
 
-
     public String getPasswordHash() {
         return passwordHash;
     }
@@ -125,25 +124,29 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-
-    public String getStatus() {
+    public UserStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(UserStatus status) {
         this.status = status;
     }
-
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 
     public LocalDateTime getLastLogin() {
         return lastLogin;

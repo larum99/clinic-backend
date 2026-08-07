@@ -1,5 +1,6 @@
 package com.clinic.clinic.dto.request;
 
+import com.clinic.clinic.enums.UserStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ public record UserRequest(
         @Size(min = 6, max = 255)
         String password,
         @NotBlank
-        String status
+        UserStatus status
 
 ) {
 }

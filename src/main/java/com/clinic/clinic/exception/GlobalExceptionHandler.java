@@ -6,6 +6,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -128,6 +131,35 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
+                .body(errorResponse);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationException(
+            AuthenticationException exception,
+            HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
+        String message = MessageConstants.ERROR_MESSAGE_INVALID_CREDENTIALS;
+
+        if (exception instanceof DisabledException) {
+            message = MessageConstants.ERROR_MESSAGE_USER_DISABLED;
+        }
+
+        if (exception instanceof LockedException) {
+            message = MessageConstants.ERROR_MESSAGE_USER_LOCKED;
+        }
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                LocalDateTime.now(),
+                status.value(),
+                MessageConstants.ERROR_TITLE_AUTHENTICATION_FAILED,
+                message,
+                request.getRequestURI()
+        );
+
+        return ResponseEntity
+                .status(status)
                 .body(errorResponse);
     }
 

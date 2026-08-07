@@ -23,7 +23,7 @@ public class Role {
     @OneToMany(mappedBy = "role")
     private Set<User> users = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "role_permissions",
             joinColumns = @JoinColumn(name = "id_role"),
