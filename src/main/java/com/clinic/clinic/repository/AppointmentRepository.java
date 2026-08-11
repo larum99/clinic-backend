@@ -2,12 +2,16 @@ package com.clinic.clinic.repository;
 
 import com.clinic.clinic.entity.Appointment;
 import com.clinic.clinic.enums.AppointmentStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDateTime;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
+    Page<Appointment> findByPatientId(Long patientId, Pageable pageable);
 
     @Query("""
             SELECT COUNT(a) > 0
@@ -16,12 +20,14 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
               AND a.startDatetime < :endDatetime
               AND a.endDatetime > :startDatetime
               AND a.status <> :cancelledStatus
+              AND (:excludedAppointmentId IS NULL OR a.id <> :excludedAppointmentId)
             """)
     boolean existsOverlappingAppointmentForSpecialist(
             Long specialistId,
             LocalDateTime startDatetime,
             LocalDateTime endDatetime,
-            AppointmentStatus cancelledStatus
+            AppointmentStatus cancelledStatus,
+            Long excludedAppointmentId
     );
 
     @Query("""
@@ -31,11 +37,13 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
               AND a.startDatetime < :endDatetime
               AND a.endDatetime > :startDatetime
               AND a.status <> :cancelledStatus
+              AND (:excludedAppointmentId IS NULL OR a.id <> :excludedAppointmentId)
             """)
     boolean existsOverlappingAppointmentForPatient(
             Long patientId,
             LocalDateTime startDatetime,
             LocalDateTime endDatetime,
-            AppointmentStatus cancelledStatus
+            AppointmentStatus cancelledStatus,
+            Long excludedAppointmentId
     );
 }

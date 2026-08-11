@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,6 +25,7 @@ public class SpecialistController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('ESPECIALISTAS_GESTIONAR')")
     public ResponseEntity<SpecialistResponse> createSpecialist(
             @Valid @RequestBody SpecialistRequest request) {
         SpecialistResponse response =
@@ -51,6 +53,7 @@ public class SpecialistController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('ESPECIALISTAS_GESTIONAR')")
     public ResponseEntity<SpecialistResponse> updateSpecialist(
             @PathVariable Long id,
             @Valid @RequestBody SpecialistRequest request) {
@@ -60,6 +63,7 @@ public class SpecialistController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteSpecialist(
             @PathVariable Long id) {
         specialistService.deleteSpecialist(id);

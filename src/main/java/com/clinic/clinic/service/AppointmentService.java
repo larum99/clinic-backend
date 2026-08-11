@@ -6,9 +6,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AppointmentService {
-    AppointmentResponse createAppointment(AppointmentRequest request);
+    AppointmentResponse createAppointment(AppointmentRequest request, Long createdByUserId);
+
     AppointmentResponse findAppointmentById(Long id);
+
     Page<AppointmentResponse> findAllAppointments(Pageable pageable);
-    AppointmentResponse updateAppointment(Long id, AppointmentRequest request);
+
+    Page<AppointmentResponse> findMyAppointments(Long userId, Pageable pageable);
+
+    AppointmentResponse createMyAppointment(AppointmentRequest request, Long userId);
+
+    AppointmentResponse cancelMyAppointment(Long id, Long userId);
+
+    AppointmentResponse updateAppointment(Long id, AppointmentRequest request, Long changedByUserId);
+
     void deleteAppointment(Long id);
 }

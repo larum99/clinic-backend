@@ -36,6 +36,10 @@ public class UserMapper {
                 ? user.getRole().getName()
                 : null;
 
+        Long patientId = user.getPatient() != null
+                ? user.getPatient().getId()
+                : null;
+
 
         return new UserResponse(
                 user.getId(),
@@ -45,6 +49,7 @@ public class UserMapper {
                 user.getLastName(),
                 user.getEmail(),
                 user.getPhone(),
+                patientId,
                 user.getStatus(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
@@ -58,12 +63,17 @@ public class UserMapper {
                 ? user.getRole().getName()
                 : null;
 
+        Long patientId = user.getPatient() != null
+                ? user.getPatient().getId()
+                : null;
+
         return new UserSummaryResponse(
                 user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
-                roleName
+                roleName,
+                patientId
         );
     }
 }

@@ -12,6 +12,7 @@ public record UserResponse(
         String lastName,
         String email,
         String phone,
+        Long patientId,
         UserStatus status,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,

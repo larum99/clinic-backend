@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -46,38 +45,51 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token =
                 authorizationHeader.substring(7);
 
-        final String email =
-                jwtService.extractUsername(token);
+        if (token.isBlank()) {
 
-        if (email != null
-                && SecurityContextHolder
-                .getContext()
-                .getAuthentication() == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
-            CustomUserDetails userDetails =
-                    userDetailsService.loadUserByEmail(email);
+        try {
 
-            if (jwtService.isTokenValid(token, userDetails)) {
+            final String email =
+                    jwtService.extractUsername(token);
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities()
-                        );
+            if (email != null
+                    && SecurityContextHolder
+                    .getContext()
+                    .getAuthentication() == null) {
 
-                authentication.setDetails(
-                        new WebAuthenticationDetailsSource()
-                                .buildDetails(request)
-                );
+                CustomUserDetails userDetails =
+                        userDetailsService.loadUserByEmail(email);
 
-                SecurityContext context =
-                        SecurityContextHolder.createEmptyContext();
+                if (jwtService.isTokenValid(token, userDetails)) {
 
-                context.setAuthentication(authentication);
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities()
+                            );
 
-                SecurityContextHolder.setContext(context);
+                    authentication.setDetails(
+                            new WebAuthenticationDetailsSource()
+                                    .buildDetails(request)
+                    );
+
+                    SecurityContext context =
+                            SecurityContextHolder.createEmptyContext();
+
+                    context.setAuthentication(authentication);
+
+                    SecurityContextHolder.setContext(context);
+                }
             }
+
+        } catch (Exception exception) {
+
+            SecurityContextHolder.clearContext();
         }
 
         try {

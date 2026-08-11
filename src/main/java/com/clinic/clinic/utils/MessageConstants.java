@@ -23,8 +23,18 @@ public final class MessageConstants {
     public static final String SCHEDULE_NOT_FOUND = "Schedule with id %d was not found.";
     public static final String INVALID_SCHEDULE_TIME_RANGE = "End time must be after start time.";
     public static final String SCHEDULE_OVERLAP = "The specialist already has a schedule that overlaps this time range.";
+    public static final String APPOINTMENT_NOT_FOUND = "Appointment with id %s was not found";
+    public static final String APPOINTMENT_INVALID_STATUS = "Appointment status '%s' is not valid";
+    public static final String APPOINTMENT_SCHEDULE_UNAVAILABLE = "The specialist does not attend at that date and time.";
+    public static final String APPOINTMENT_SPECIALIST_CONFLICT = "The specialist already has an appointment that overlaps the requested time.";
+    public static final String APPOINTMENT_PATIENT_CONFLICT = "The patient already has an appointment that overlaps the requested time.";
+    public static final String APPOINTMENT_PATIENT_MISMATCH = "You can only manage your own appointments.";
+    public static final String APPOINTMENT_PAST_DATETIME = "The appointment date and time must be in the future.";
+    public static final String PATIENT_NOT_FOUND_FOR_USER = "Patient for user with id %s was not found";
     public static final String EMAIL_ALREADY_EXISTS = "User with email %s already exists";
     public static final String ROLE_NOT_FOUND = "Role with id %s was not found";
+    public static final String ROLE_NOT_FOUND_BY_NAME = "Role with name %s was not found";
+    public static final String REGISTER_SUCCESS = "Usuario registrado correctamente.";
 
     public static final String ERROR_TITLE_AUTHENTICATION_FAILED = "Authentication Failed";
     public static final String ERROR_MESSAGE_INVALID_CREDENTIALS = "Invalid email or password.";

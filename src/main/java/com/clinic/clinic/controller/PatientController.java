@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +24,7 @@ public class PatientController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAuthority('PACIENTES_GESTIONAR')")
     public ResponseEntity<PatientResponse> createPatient(
             @Valid @RequestBody PatientRequest request) {
         PatientResponse response = patientService.createPatient(request);
@@ -30,6 +32,7 @@ public class PatientController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('PACIENTES_VER')")
     public ResponseEntity<Page<PatientResponse>> findAllPatients(
             @PageableDefault(size = PaginationConstants.DEFAULT_PAGE_SIZE,
                     sort = PaginationConstants.DEFAULT_SORT_BY) Pageable pageable) {
@@ -38,12 +41,14 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('PACIENTES_VER')")
     public ResponseEntity<PatientResponse> findPatientById(@PathVariable Long id) {
         PatientResponse response = patientService.findPatientById(id);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('PACIENTES_GESTIONAR')")
     public ResponseEntity<PatientResponse> updatePatient(
             @PathVariable Long id,
             @Valid @RequestBody PatientRequest request) {
@@ -52,6 +57,7 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();

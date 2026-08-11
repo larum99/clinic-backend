@@ -40,6 +40,10 @@ public class AppointmentMapper {
 
     public AppointmentResponse toResponse(Appointment appointment) {
 
+        Long serviceId = appointment.getService() != null
+                ? appointment.getService().getId()
+                : null;
+
         Long createdById = appointment.getCreatedBy() != null
                 ? appointment.getCreatedBy().getId()
                 : null;
@@ -48,7 +52,7 @@ public class AppointmentMapper {
                 appointment.getId(),
                 appointment.getPatient().getId(),
                 appointment.getSpecialist().getId(),
-                appointment.getService().getId(),
+                serviceId,
                 appointment.getStatus(),
                 appointment.getStartDatetime(),
                 appointment.getEndDatetime(),

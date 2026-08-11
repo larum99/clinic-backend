@@ -1,9 +1,12 @@
 package com.clinic.clinic.service;
 
 import com.clinic.clinic.dto.request.PatientRequest;
+import com.clinic.clinic.dto.response.PatientDirectoryResponse;
 import com.clinic.clinic.dto.response.PatientResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface PatientService {
     PatientResponse createPatient(PatientRequest request);
@@ -11,4 +14,5 @@ public interface PatientService {
     Page<PatientResponse> findAllPatients(Pageable pageable);
     PatientResponse updatePatient(Long id, PatientRequest request);
     void deletePatient(Long id);
+    List<PatientDirectoryResponse> findAllPatientsDirectory();
 }

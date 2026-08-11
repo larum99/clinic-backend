@@ -64,6 +64,9 @@ public class User {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Patient patient;
+
 
     public User() {
     }
@@ -154,5 +157,13 @@ public class User {
 
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 }

@@ -27,8 +27,22 @@ public class SpecialistMapper {
 
     public SpecialistResponse toResponse(Specialist specialist) {
 
-        Long userId = specialist.getUser() != null
-                ? specialist.getUser().getId()
+        User user = specialist.getUser();
+
+        Long userId = user != null
+                ? user.getId()
+                : null;
+
+        String firstName = user != null
+                ? user.getFirstName()
+                : null;
+
+        String lastName = user != null
+                ? user.getLastName()
+                : null;
+
+        String email = user != null
+                ? user.getEmail()
                 : null;
 
         Set<Long> serviceIds = specialist.getServices()
@@ -39,6 +53,9 @@ public class SpecialistMapper {
         return new SpecialistResponse(
                 specialist.getId(),
                 userId,
+                firstName,
+                lastName,
+                email,
                 specialist.getSpecialty(),
                 specialist.getProfessionalLicense(),
                 specialist.getActive(),

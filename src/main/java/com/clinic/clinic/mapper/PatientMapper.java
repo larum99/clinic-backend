@@ -1,6 +1,7 @@
 package com.clinic.clinic.mapper;
 
 import com.clinic.clinic.dto.request.PatientRequest;
+import com.clinic.clinic.dto.response.PatientDirectoryResponse;
 import com.clinic.clinic.dto.response.PatientResponse;
 import com.clinic.clinic.entity.Patient;
 import com.clinic.clinic.entity.User;
@@ -35,6 +36,35 @@ public class PatientMapper {
                 patient.getBirthDate(),
                 patient.getAcceptsData(),
                 patient.getAcceptsPromotions()
+        );
+    }
+
+    public PatientDirectoryResponse toDirectoryResponse(Patient patient) {
+        User user = patient.getUser();
+
+        Long userId = user != null
+                ? user.getId()
+                : null;
+
+        String firstName = user != null
+                ? user.getFirstName()
+                : null;
+
+        String lastName = user != null
+                ? user.getLastName()
+                : null;
+
+        String email = user != null
+                ? user.getEmail()
+                : null;
+
+        return new PatientDirectoryResponse(
+                userId,
+                patient.getId(),
+                firstName,
+                lastName,
+                email,
+                "PACIENTE"
         );
     }
 }

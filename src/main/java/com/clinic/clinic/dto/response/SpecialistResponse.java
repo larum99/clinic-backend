@@ -5,6 +5,9 @@ import java.util.Set;
 public record SpecialistResponse(
         Long id,
         Long userId,
+        String firstName,
+        String lastName,
+        String email,
         String specialty,
         String professionalLicense,
         Boolean active,

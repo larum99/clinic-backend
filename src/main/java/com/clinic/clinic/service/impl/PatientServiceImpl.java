@@ -1,6 +1,7 @@
 package com.clinic.clinic.service.impl;
 
 import com.clinic.clinic.dto.request.PatientRequest;
+import com.clinic.clinic.dto.response.PatientDirectoryResponse;
 import com.clinic.clinic.dto.response.PatientResponse;
 import com.clinic.clinic.entity.Patient;
 import com.clinic.clinic.entity.User;
@@ -15,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -102,6 +105,13 @@ public class PatientServiceImpl implements PatientService {
     public void deletePatient(Long id) {
         Patient patient = findPatientEntityById(id);
         patientRepository.delete(patient);
+    }
+
+    @Override
+    public List<PatientDirectoryResponse> findAllPatientsDirectory() {
+        return patientRepository.findAll().stream()
+                .map(patientMapper::toDirectoryResponse)
+                .toList();
     }
 
     private Patient findPatientEntityById(Long id) {
