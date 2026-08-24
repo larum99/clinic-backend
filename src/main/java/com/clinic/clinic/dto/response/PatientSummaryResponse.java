@@ -1,11 +1,11 @@
 package com.clinic.clinic.dto.response;
 
-public record PatientDirectoryResponse(
+public record PatientSummaryResponse(
         Long id,
-        Long patientId,
         String firstName,
         String lastName,
         String email,
-        String role
+        String role,
+        Long patientId
 ) {
 }

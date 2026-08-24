@@ -1,7 +1,7 @@
 package com.clinic.clinic.service.impl;
 
 import com.clinic.clinic.dto.request.PatientRequest;
-import com.clinic.clinic.dto.response.PatientDirectoryResponse;
+import com.clinic.clinic.dto.response.PatientSummaryResponse;
 import com.clinic.clinic.dto.response.PatientResponse;
 import com.clinic.clinic.entity.Patient;
 import com.clinic.clinic.entity.User;
@@ -108,9 +108,9 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<PatientDirectoryResponse> findAllPatientsDirectory() {
+    public List<PatientSummaryResponse> findAllPatientsSummary() {
         return patientRepository.findAll().stream()
-                .map(patientMapper::toDirectoryResponse)
+                .map(patientMapper::toSummary)
                 .toList();
     }
 
