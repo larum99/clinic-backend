@@ -36,6 +36,15 @@ public final class MessageConstants {
     public static final String ROLE_NOT_FOUND_BY_NAME = "Role with name %s was not found";
     public static final String REGISTER_SUCCESS = "Usuario registrado correctamente.";
 
+    public static final String MEDICAL_HISTORY_NOT_FOUND = "Medical history with id %s was not found";
+    public static final String MEDICAL_HISTORY_NOT_FOUND_FOR_PATIENT = "Medical history for patient with id %s was not found";
+    public static final String MEDICAL_HISTORY_ALREADY_EXISTS = "Patient with id %s already has a medical history";
+    public static final String CLINICAL_EVOLUTION_NOT_FOUND = "Clinical evolution with id %s was not found";
+
+    public static final String PASSWORD_RESET_TOKEN_INVALID = "Invalid or expired password reset token.";
+    public static final String PASSWORD_RESET_EMAIL_SENT = "If the email is registered, a password reset token has been generated.";
+    public static final String PASSWORD_RESET_SUCCESS = "Password has been reset successfully.";
+
     public static final String ERROR_TITLE_AUTHENTICATION_FAILED = "Authentication Failed";
     public static final String ERROR_MESSAGE_INVALID_CREDENTIALS = "Invalid email or password.";
     public static final String ERROR_MESSAGE_USER_DISABLED = "User account is disabled.";
