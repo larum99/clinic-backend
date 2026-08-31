@@ -1,0 +1,11 @@
+# MailDev for local development - captures emails without sending them to the internet.
+# Usage: docker compose -f docker-compose.mail.yml up
+#   - SMTP server:  localhost:1025
+#   - Web UI:       http://localhost:1080
+services:
+  maildev:
+    image: maildev/maildev:latest
+    container_name: clinic-maildev
+    ports:
+      - "1025:1025"
+      - "1080:1080"
