@@ -42,8 +42,10 @@ public final class MessageConstants {
     public static final String CLINICAL_EVOLUTION_NOT_FOUND = "Clinical evolution with id %s was not found";
 
     public static final String PASSWORD_RESET_TOKEN_INVALID = "Invalid or expired password reset token.";
-    public static final String PASSWORD_RESET_EMAIL_SENT = "If the email is registered, a password reset token has been generated.";
+    public static final String PASSWORD_RESET_EMAIL_SENT = "Si existe una cuenta asociada a este correo, recibirás instrucciones para restablecer tu contraseña.";
     public static final String PASSWORD_RESET_SUCCESS = "Password has been reset successfully.";
+    public static final String PASSWORD_RESET_EMAIL_FAILED = "No se pudo enviar el correo de restablecimiento de contraseña.";
+    public static final String PASSWORD_RESET_EMAIL_SUBJECT = "Restablece tu contraseña";
 
     public static final String ERROR_TITLE_AUTHENTICATION_FAILED = "Authentication Failed";
     public static final String ERROR_MESSAGE_INVALID_CREDENTIALS = "Invalid email or password.";
