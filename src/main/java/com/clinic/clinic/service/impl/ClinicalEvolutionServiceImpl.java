@@ -46,7 +46,7 @@ public class ClinicalEvolutionServiceImpl implements ClinicalEvolutionService {
     @Override
     @Transactional
     public ClinicalEvolutionResponse createClinicalEvolution(ClinicalEvolutionRequest request) {
-        MedicalHistory medicalHistory = findMedicalHistoryByPatientId(request.patientId());
+        MedicalHistory medicalHistory = findMedicalHistoryById(request.medicalHistoryId());
         Specialist specialist = findSpecialistEntityById(request.specialistId());
 
         Appointment appointment = null;
@@ -69,8 +69,8 @@ public class ClinicalEvolutionServiceImpl implements ClinicalEvolutionService {
     }
 
     @Override
-    public Page<ClinicalEvolutionResponse> findAllClinicalEvolutions(Long patientId, Pageable pageable) {
-        MedicalHistory medicalHistory = findMedicalHistoryByPatientId(patientId);
+    public Page<ClinicalEvolutionResponse> findAllClinicalEvolutions(Long medicalHistoryId, Pageable pageable) {
+        MedicalHistory medicalHistory = findMedicalHistoryById(medicalHistoryId);
         return clinicalEvolutionRepository
                 .findByMedicalHistoryId(medicalHistory.getId(), pageable)
                 .map(clinicalEvolutionMapper::toResponse);
@@ -89,10 +89,10 @@ public class ClinicalEvolutionServiceImpl implements ClinicalEvolutionService {
                 ));
     }
 
-    private MedicalHistory findMedicalHistoryByPatientId(Long patientId) {
-        return medicalHistoryRepository.findByPatientId(patientId)
+    private MedicalHistory findMedicalHistoryById(Long medicalHistoryId) {
+        return medicalHistoryRepository.findById(medicalHistoryId)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        MessageConstants.MEDICAL_HISTORY_NOT_FOUND_FOR_PATIENT.formatted(patientId)
+                        MessageConstants.MEDICAL_HISTORY_NOT_FOUND.formatted(medicalHistoryId)
                 ));
     }
 

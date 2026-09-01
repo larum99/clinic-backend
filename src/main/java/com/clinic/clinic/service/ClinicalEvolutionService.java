@@ -10,7 +10,7 @@ public interface ClinicalEvolutionService {
 
     ClinicalEvolutionResponse findClinicalEvolutionById(Long id);
 
-    Page<ClinicalEvolutionResponse> findAllClinicalEvolutions(Long patientId, Pageable pageable);
+    Page<ClinicalEvolutionResponse> findAllClinicalEvolutions(Long medicalHistoryId, Pageable pageable);
 
     void deleteClinicalEvolution(Long id);
 }

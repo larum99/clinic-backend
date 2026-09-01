@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 
 public record ClinicalEvolutionRequest(
         @NotNull
-        Long patientId,
+        Long medicalHistoryId,
         Long appointmentId,
         @NotNull
         Long specialistId,
