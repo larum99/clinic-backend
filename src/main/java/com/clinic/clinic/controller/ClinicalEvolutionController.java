@@ -42,14 +42,14 @@ public class ClinicalEvolutionController {
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN', 'ESPECIALISTA')")
     public ResponseEntity<Page<ClinicalEvolutionResponse>> findAllClinicalEvolutions(
-            @RequestParam Long patientId,
+            @RequestParam Long medicalHistoryId,
             @PageableDefault(
                     size = PaginationConstants.DEFAULT_PAGE_SIZE,
                     sort = PaginationConstants.DEFAULT_SORT_BY
             )
             Pageable pageable) {
         Page<ClinicalEvolutionResponse> response =
-                clinicalEvolutionService.findAllClinicalEvolutions(patientId, pageable);
+                clinicalEvolutionService.findAllClinicalEvolutions(medicalHistoryId, pageable);
         return ResponseEntity.ok(response);
     }
 
