@@ -10,6 +10,8 @@ public final class Endpoints {
     public static final String APPOINTMENTS_PATH = API_BASE_PATH + "/appointments";
     public static final String USERS_PATH = API_BASE_PATH + "/users";
     public static final String ROLES_PATH = API_BASE_PATH + "/roles";
+    public static final String MEDICAL_HISTORIES_PATH = API_BASE_PATH + "/medical-histories";
+    public static final String CLINICAL_EVOLUTIONS_PATH = API_BASE_PATH + "/clinical-evolutions";
 
     private Endpoints() {
     }
